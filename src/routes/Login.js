@@ -6,14 +6,14 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item
 
 const Login = ({
-  app,
+  login,
   dispatch,
   form: {
     getFieldDecorator,
     validateFieldsAndScroll,
   },
 }) => {
-  const { loginLoading } = app
+  const { loginLoading } = login
 
   const uri = 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg'
 
@@ -23,7 +23,7 @@ const Login = ({
         return
       }
       console.log(value)
-      dispatch({ type: 'app/login', payload: value })
+      dispatch({ type: 'login/login', payload: value })
     })
   }
 
@@ -82,7 +82,7 @@ const Login = ({
 
 Login.propTypes = {
   form: PropTypes.object,
-  app: PropTypes.object,
+  login: PropTypes.object,
   dispatch: PropTypes.func,
 }
 
@@ -127,4 +127,10 @@ const styles = {
   },
 }
 
-export default connect(({ app }) => ({ app }))(Form.create()(Login))
+// function mapStateToProps (state) {
+//   return {
+//     login: state.login
+//   }
+// }
+
+export default connect(({ login }) => ({ login }))(Form.create()(Login))

@@ -7,7 +7,7 @@ const ChattingDisplay = ({ chattingData }) => {
   const htmlData = chattingData.map((data, index) =>
     <ChattingItem htmlContent={data.htmlContent} user={data.user} key={index}></ChattingItem>
   )
-  return (<div>{htmlData}</div>)
+  return <div>{htmlData}</div>
 }
 
 ChattingDisplay.propTypes = {

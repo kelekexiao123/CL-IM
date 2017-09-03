@@ -1,31 +1,29 @@
 const qs = require('qs');
-const mockjs = require('mockjs');  // 导入mock.js的模块
+const mockjs = require('mockjs');  //导入mock.js的模块
 
-const Random = mockjs.Random;  // 导入mock.js的随机数
+const Random = mockjs.Random;  //导入mock.js的随机数
 
-//  数据持久化   保存在global的全局变量中
+// 数据持久化   保存在global的全局变量中
 let tableListData = {};
 
 if (!global.tableListData) {
   const data = mockjs.mock({
     'data|100': [{
       'id|+1': 1,
-      name: () => {
+      'account': /\d{8,10}/,
+      'password': /\w{9,19}/,
+      'name': () => {
         return Random.cname();
       },
-      mobile: /1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}/,
-      avatar: () => {
+      'mobile': /1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}/,
+      'avatar': () => {
         return Random.image('125x125');
       },
-      'status|1-2': 1,
-      email: () => {
-        return Random.email('visiondk.com');
+      'isOnline|0-1': 1,
+      'email': () => {
+        return Random.email('qq.com');
       },
-      'isadmin|0-1': 1,
-      created_at: () => {
-        return Random.datetime('yyyy-MM-dd HH:mm:ss');
-      },
-      updated_at: () => {
+      'lastLogin_at': () => {
         return Random.datetime('yyyy-MM-dd HH:mm:ss');
       },
     }],
@@ -41,18 +39,17 @@ if (!global.tableListData) {
 }
 
 module.exports = {
-  // post请求  /api/users/ 是拦截的地址   方法内部接受 request response对象
-  'GET/users': (req, res) => {
+  //post请求  /api/users/ 是拦截的地址   方法内部接受 request response对象
+  'GET /api/pagination' (req, res) {
     const page = qs.parse(req.query);
     const pageSize = page.pageSize || 10;
     const currentPage = page.page || 1;
 
     let data;
     let newPage;
+    let newData = tableListData.data.concat();
 
-    const newData = tableListData.data.concat();
-
-    // 数据开始模拟
+    //数据开始模拟
     if (page.field) {
       const d = newData.filter((item) => {
         return item[page.filed].indexOf(page.keyword) > -1;
@@ -75,7 +72,7 @@ module.exports = {
     }
 
     setTimeout(() => {
-      res.json({      // 将请求json格式返回
+      res.json({      //将请求json格式返回
         success: true,
         data,
         page: '123',
