@@ -1,47 +1,45 @@
-import * as userService from '../services/users'
+import * as usersService from '../services/users'
 
 export default {
   namespace: 'users',
   state: {
-    self: {
-      account: '250407778',
-      name: 'Duang'
-    },
+    self: {},
     groups: [],
-    userList: {},
+    userList: [],
     total: null,
   },
   reducers: {
-    load(state, { payload: { groups, data, total } }) {
+    load(state, { payload: { friendsData, userData }}) {
       return {
         ...state,
-        groups, 
-        userList: data, 
-        total, 
+        self: userData,
+        groups: userData.groups,
+        userList: friendsData
       }
     },
-    add(state, { payload: todo }) {
-      return state.concat(todo)
-    },
-    remove(state, { payload: id }) {
-      return state.filter(todo => todo.id !== id)
-    },
-    update(state, { payload: updatedTodo }) {
-      return state.map(todo => {
-        if (todo.id === updatedTodo.id) {
-          return { ...todo, ...updatedTodo }
-        } else {
-          return todo
-        }
-      })
-    },
+    // add(state, { payload: todo }) {
+    //   return state.concat(todo)
+    // },
+    // remove(state, { payload: id }) {
+    //   return state.filter(todo => todo.id !== id)
+    // },
+    // update(state, { payload: updatedTodo }) {
+    //   return state.map(todo => {
+    //     if (todo.id === updatedTodo.id) {
+    //       return { ...todo, ...updatedTodo }
+    //     } else {
+    //       return todo
+    //     }
+    //   })
+    // },
   },
   effects: {
-    *fetchUserList({ payload: { id } }, { call, put }) {
-      const { groups, data, total } = yield call(userService.fetch, { id })
+    * fetchUserList({ payload: { account }}, { call, put }) {
+      const { data: userData } = yield call(usersService.fetchUser, { account })
+      const { data: friendsData } = yield call(usersService.fetchFriends, { account })
       yield put({
         type: 'load',
-        payload: { groups, data, total }
+        payload: { friendsData, userData }
       })
     },
   },

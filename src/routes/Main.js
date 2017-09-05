@@ -1,57 +1,15 @@
 import React from 'react'
 import { connect } from 'dva'
-import { fetch } from 'dva/fetch'
-import { Layout, Button, textarea, Row, Col, Avatar, notification } from 'antd';
-import UsersSidebar from '../components/UsersSidebar';
-import ChattingDisplay from '../components/ChattingDisplay';
+import { Layout, Button, Row, Col, Avatar, notification } from 'antd'
+import UsersSidebar from '../components/UsersSidebar'
+import ChattingDisplay from '../components/ChattingDisplay'
 import E from 'wangeditor'
 import xss from 'xss'
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout
 
 class MainPanel extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-    }
-  }
   static editor = null
-
-  tabChange = (e) => {
-    console.log(e);
-    const userList = this.props.users.userList
-    for (let i = 0; i < userList.length; i++) {
-      if (e.item.props.account === userList[i].account) {
-        this.props.dispatch({ 
-          type: 'chatting/fetchChattingMsg', 
-          payload: {user: userList[i], tab: e.key} 
-        })
-        return
-      }
-    }
-  }
-
-  handleSend = () => {
-    if (this.editor.txt.text()) {
-      const appendData = [{
-        user: "Duang",
-        htmlContent: xss(this.editor.txt.html())
-      }]
-      this.props.dispatch({ type: 'chatting/sendMsg', payload: appendData })
-    } else {
-      notification['error']({
-        message: '聊天信息不能为空',
-        duration: 2,
-        style: {
-          backgroundColor: "rgba(64,64,64,0.2)",
-        },
-      });
-    }
-    this.editor && this.editor.txt.clear()
-  }
-  handleClear = () => {
-    this.editor && this.editor.txt.clear()
-  }
   componentDidMount() {
     const element = this.refs.editor
     const editor = this.editor = new E(element)
@@ -79,6 +37,42 @@ class MainPanel extends React.Component {
     // }
     editor.create()
   }
+  tabChange = (e) => {
+    console.log(e)
+    this.editor && this.editor.txt.clear()
+    const userList = this.props.users.userList
+    for (let i = 0; i < userList.length; i++) {
+      if (e.key === userList[i].account) {
+        this.props.dispatch({
+          type: 'chatting/fetchChattingMsg',
+          payload: { user: userList[i], tab: e.key }
+        })
+        return
+      }
+    }
+  }
+
+  handleSend = () => {
+    if (this.editor.txt.text()) {
+      const appendData = [{
+        user: 'Duang',
+        htmlContent: xss(this.editor.txt.html())
+      }]
+      this.props.dispatch({ type: 'chatting/sendMsg', payload: appendData })
+    } else {
+      notification['error']({
+        message: '聊天信息不能为空',
+        duration: 2,
+        style: {
+          backgroundColor: 'rgba(64,64,64,0.2)',
+        },
+      })
+    }
+    this.editor && this.editor.txt.clear()
+  }
+  handleClear = () => {
+    this.editor && this.editor.txt.clear()
+  }
   render() {
     const uri = 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg'
     const chatting = this.props.chatting
@@ -87,7 +81,7 @@ class MainPanel extends React.Component {
         <UsersSidebar
           handleClick={this.tabChange}
           initialTab={chatting.currentTab}
-          userMsg={this.props.users}
+          users={this.props.users}
         />
         <Layout>
           <Header
@@ -97,11 +91,11 @@ class MainPanel extends React.Component {
             }}
           >
             <Avatar style={{ marginRight: 10 }} src={uri} size="large" />
-            <p>{chatting.currentUser.name}</p>
+            <p>{chatting.toUser.name}</p>
           </Header>
           <Content style={{ margin: '12px 16px' }}>
             <Row style={{ padding: 24, marginBottom: 12, background: '#fff', height: 450, minWidth: 500, overflow: 'auto' }}>
-              <ChattingDisplay chattingData={this.props.chatting.chattingData} user={chatting.currentUser}></ChattingDisplay>
+              <ChattingDisplay chattingData={chatting.chattingData} selfUser={this.props.users.self} toUser={chatting.toUser}></ChattingDisplay>
             </Row>
             <Row>
               <div ref="editor" style={{ textAlign: 'left', background: '#fff' }}></div>
@@ -113,19 +107,23 @@ class MainPanel extends React.Component {
               style={{ padding: 10, margin: 0, background: '#fff', border: '1px solid #ccc', borderTop: '0' }}
             >
               <Col>
-                <Button type="danger" onClick={this.handleClear}>清除</Button>
+                <Button type="danger" onClick={this.handleClear}>
+                  清除
+                </Button>
               </Col>
               <Col>
-                <Button type="primary" onClick={this.handleSend}>发送</Button>
+                <Button type="primary" onClick={this.handleSend}>
+                  发送
+                </Button>
               </Col>
             </Row>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
             CL IM ©2017 Created by CL
-        </Footer>
+          </Footer>
         </Layout>
       </Layout>
-    );
+    )
   }
 }
 

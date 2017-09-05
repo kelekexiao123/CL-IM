@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox } from 'antd'
 
 const FormItem = Form.Item
 
@@ -22,7 +22,6 @@ const Login = ({
       if (err) {
         return
       }
-      console.log(value)
       dispatch({ type: 'login/login', payload: value })
     })
   }

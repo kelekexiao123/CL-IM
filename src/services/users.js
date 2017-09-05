@@ -1,5 +1,9 @@
-import request from '../utils/request';
+import request from '../utils/request'
 
-export function fetch({ id }) {
-  return request(`/api/users?id=${id}`);
+export function fetchFriends({ account }) {
+  return request(`/api/friends?account=${account}`)
+}
+
+export function fetchUser({ account }) {
+  return request(`/api/users?account=${account}`)
 }

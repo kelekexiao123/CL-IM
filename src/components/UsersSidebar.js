@@ -1,22 +1,21 @@
-import React from 'react';
-import { Menu, Icon, Layout, Avatar, Row, Col } from 'antd';
-import { Link } from 'dva/router';
+import React from 'react'
+import { Menu, Layout, Avatar, Button, Icon } from 'antd'
 import PropTypes from 'prop-types'
-import { fetch } from 'dva/fetch'
 
-const SubMenu = Menu.SubMenu;
-const { Sider } = Layout;
+const SubMenu = Menu.SubMenu
+const ButtonGroup = Button.Group
+const { Sider } = Layout
 
-const UsersSidebar = ({ handleClick, initialTab, userMsg }) => {
-  const uri = 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg'
-  const htmlGroups = userMsg.groups.map(function (groupName, groupIndex) {
-    const htmlUserList = userMsg.userList
+const UsersSidebar = ({ handleClick, initialTab, users }) => {
+  // const uri = 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg'
+  const htmlGroups = users.groups.map(function (groupName, groupIndex) {
+    const htmlUserList = users.userList
       .filter(function (data, index) {
         return data.group === groupName
       })
       .map(function (data, index) {
         return (
-          <Menu.Item account={data.account} key={"sub" + groupIndex + ' ' + index} style={{ display: 'flex', alignItems: 'center' }}>
+          <Menu.Item account={data.account} key={data.account} style={{ display: 'flex', alignItems: 'center' }}>
             <Avatar shape="square" style={{ marginRight: 10 }} src={data.avatar} />
             <span>{data.name}({data.account})</span>
           </Menu.Item>
@@ -24,7 +23,7 @@ const UsersSidebar = ({ handleClick, initialTab, userMsg }) => {
       })
 
     return (
-      <SubMenu key={"sub" + groupIndex} title={groupName === 'default' ? '我的好友' : groupName}>
+      <SubMenu key={'sub' + groupIndex} title={groupName === 'default' ? '我的好友' : groupName}>
         {htmlUserList}
       </SubMenu>
     )
@@ -36,9 +35,17 @@ const UsersSidebar = ({ handleClick, initialTab, userMsg }) => {
       style={{ background: 'rgba(64,64,64,1)', flexDirection: 'column', display: 'inline-flex' }}
     >
       <div style={{ height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '20px', color: 'white' }}>
-        <Avatar src={uri} size="large" style={{ marginRight: 10 }} />
-        <p>欢迎您, Duang</p>
+        <Avatar src={users.self.avatar} size="large" style={{ marginRight: 10 }} />
+        <p>欢迎您, {users.self.name}</p>
       </div>
+      <ButtonGroup style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button ghost>
+          <Icon type="user" />联系人
+        </Button>
+        <Button ghost>
+          <Icon type="team" />群聊
+        </Button>
+      </ButtonGroup>
       <Menu
         theme="dark"
         onClick={handleClick}
@@ -50,12 +57,12 @@ const UsersSidebar = ({ handleClick, initialTab, userMsg }) => {
       </Menu>
       <div style={{ display: 'flex', flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end' }} />
     </Sider>
-  );
-};
+  )
+}
 
 UsersSidebar.propTypes = {
   handleClick: PropTypes.func,
   initialTab: PropTypes.string,
-};
+}
 
-export default UsersSidebar;
+export default UsersSidebar

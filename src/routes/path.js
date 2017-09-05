@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export default class Path extends Component {
   render() {
@@ -6,6 +6,6 @@ export default class Path extends Component {
       <div>
         欢迎进入下一关
       </div>
-    );
+    )
   }
 }
