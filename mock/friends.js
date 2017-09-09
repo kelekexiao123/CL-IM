@@ -12,7 +12,7 @@ if (!global.friendsListData) {
       'name': () => {
         return Random.cname()
       },
-      'avatar': '@image',
+      'avatar': 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg',
       'online|0-1': 1,
       'group|1': ['default', '家人', '朋友'],
     }],
@@ -21,7 +21,7 @@ if (!global.friendsListData) {
       'name': () => {
         return Random.cname()
       },
-      'avatar': '@image',
+      'avatar': 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg',
       'online|0-1': 1,
       'group|1': ['default', '家人', '朋友'],
     }],
@@ -30,7 +30,7 @@ if (!global.friendsListData) {
       'name': () => {
         return Random.cname()
       },
-      'avatar': '@image',
+      'avatar': 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg',
       'online|0-1': 1,
       'group|1': ['default', '家人', '朋友'],
     }],

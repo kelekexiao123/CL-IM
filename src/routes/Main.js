@@ -5,6 +5,7 @@ import UsersSidebar from '../components/UsersSidebar'
 import ChattingDisplay from '../components/ChattingDisplay'
 import E from 'wangeditor'
 import xss from 'xss'
+import { browserHistory } from 'react-router'
 
 const { Header, Content, Footer } = Layout
 
@@ -39,25 +40,27 @@ class MainPanel extends React.Component {
   }
   tabChange = (e) => {
     console.log(e)
-    this.editor && this.editor.txt.clear()
     const userList = this.props.users.userList
     for (let i = 0; i < userList.length; i++) {
       if (e.key === userList[i].account) {
+        browserHistory.push(`/main?account=${this.props.users.self.account}&toAccount=${userList[i].account}`)
         this.props.dispatch({
           type: 'chatting/fetchChattingMsg',
           payload: { user: userList[i], tab: e.key }
         })
-        return
+        break
       }
     }
+    this.editor && this.editor.txt.clear()
   }
 
   handleSend = () => {
     if (this.editor.txt.text()) {
-      const appendData = [{
-        user: 'Duang',
-        htmlContent: xss(this.editor.txt.html())
-      }]
+      const appendData = {
+        fromUser: this.props.users.self.account,
+        toUser: this.props.chatting.toUser.account,
+        htmlContent: xss(this.editor.txt.html()),
+      }
       this.props.dispatch({ type: 'chatting/sendMsg', payload: appendData })
     } else {
       notification['error']({
@@ -74,7 +77,6 @@ class MainPanel extends React.Component {
     this.editor && this.editor.txt.clear()
   }
   render() {
-    const uri = 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg'
     const chatting = this.props.chatting
     return (
       <Layout style={{ display: 'flex', flexDirection: 'row' }}>
@@ -90,7 +92,7 @@ class MainPanel extends React.Component {
               alignItems: 'center', fontSize: '18px', color: 'black', paddingLeft: 16,
             }}
           >
-            <Avatar style={{ marginRight: 10 }} src={uri} size="large" />
+            <Avatar style={{ marginRight: 10 }} src={chatting.toUser.avatar} size="large" />
             <p>{chatting.toUser.name}</p>
           </Header>
           <Content style={{ margin: '12px 16px' }}>

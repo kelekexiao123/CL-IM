@@ -17,7 +17,7 @@ if (!global.userListData) {
         return Random.cname()
       },
       'mobile': /1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}/,
-      'avatar': '@image',
+      'avatar': 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg',
       'online|0-1': 1,
       'email': '@account\@qq.com',
       'lastLogin_at': () => {
@@ -37,7 +37,6 @@ module.exports = {
     const query = qs.parse(req.query)
     const account = query.account
     let usersArr = userListData.data
-    console.log(account)
     let data
     for (let i = 0; i < usersArr.length; i++) {
       if (account === usersArr[i].account) {

@@ -42,7 +42,7 @@ if (!global.chattingData) {
 module.exports = {
   'GET /api/chatting'(req, res) {
     const query = qs.parse(req.query)
-    const fromUser = query.fromAccount
+    const fromUser = query.account
     const toUser = query.toAccount
     let data = []
     let total = 0
@@ -52,7 +52,6 @@ module.exports = {
         total = chattingData[i].total
       }
     }
-
     setTimeout(() => {
       res.json({
         success: true,
@@ -60,5 +59,37 @@ module.exports = {
         total
       })
     }, 200)
+  },
+
+  'PUT /api/chatting'(req, res) {
+    const query = qs.parse(req.query)
+    const fromUser = query.account
+    const toUser = query.toAccount
+    const htmlContent = query.htmlContent
+    let flag = 0
+    let chatObj = null
+    for (let i = 0; i < chattingData.length; i++) {
+      if ((fromUser === chattingData[i].account1 && toUser === chattingData[i].account2) || (fromUser === chattingData[i].account2 && toUser === chattingData[i].account1)) {
+        chatObj = chattingData[i]
+        flag = 1
+      }
+    }
+    if (!flag) {
+      chatObj = {
+        'account1': fromUser,
+        'account2': toUser,
+        'data': [],
+        total: 0,
+      }
+      chattingData.push(chatObj)
+    }
+    chatObj.data.push({
+      user: fromUser,
+      htmlContent: htmlContent
+    })
+    chatObj.total++
+    res.json({
+      success: true,
+    })
   },
 }

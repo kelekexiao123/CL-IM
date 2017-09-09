@@ -4,6 +4,7 @@ import io from 'socket.io-client'
 export default {
   namespace: 'chatting',
   state: {
+    socket: {},
     currentTab: '',
     editorContent: '',
     htmlContent: '',
@@ -20,6 +21,12 @@ export default {
         toUser: user
       }
     },
+    setSocket(state, { payload: { socket }, }) {
+      return {
+        ...state,
+        socket
+      }
+    },
     changeTab(state, { payload: { user, tab }, }) {
       return {
         ...state,
@@ -28,9 +35,12 @@ export default {
       }
     },
     sendMsg(state, { payload: appendData }) {
+      const { fromUser, toUser, htmlContent, } = appendData
+      console.log(state)
+      state.socket && state.socket.emit('sendMsg', fromUser, toUser, htmlContent)
       return {
         ...state,
-        chattingData: state.chattingData.concat(appendData)
+        chattingData: state.chattingData.concat({ user: fromUser, htmlContent, })
       }
     }
   },
@@ -40,8 +50,8 @@ export default {
         type: 'changeTab',
         payload: { user, tab }
       })
-      const fromAccount = yield select(state => state.users.self.account)
-      const { data, total } = yield call(chattingService.fetch, { fromAccount, toAccount: user.account })
+      const account = yield select(state => state.users.self.account)
+      const { data, total } = yield call(chattingService.fetch, { account, toAccount: user.account })
       yield put({
         type: 'load',
         payload: { data, total, user }
@@ -57,6 +67,7 @@ export default {
           socket.on('connect', function () {
             socket.emit('join', userName)
           })
+          dispatch({ type: 'setSocket', payload: { socket }, })
         }
       })
     },

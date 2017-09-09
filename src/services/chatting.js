@@ -1,5 +1,5 @@
 import request from '../utils/request'
 
-export function fetch({ fromAccount, toAccount }) {
-  return request(`/api/chatting?fromAccount=${fromAccount}&toAccount=${toAccount}`)
+export function fetch({ account, toAccount }) {
+  return request(`/api/chatting?account=${account}&toAccount=${toAccount}`)
 }
