@@ -16,10 +16,6 @@ module.exports = {
         'indent': [
             'error',
             2,
-            {
-                SwitchCase: 1,
-                flatTernaryExpressions: true
-            }
         ],
         // @fixable jsx 的 children 缩进必须为两个空格
         'react/jsx-indent': [

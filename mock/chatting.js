@@ -54,6 +54,7 @@ module.exports = {
     }
     setTimeout(() => {
       res.json({
+        method: 'GET',
         success: true,
         data,
         total
@@ -65,7 +66,7 @@ module.exports = {
     const query = qs.parse(req.query)
     const fromUser = query.account
     const toUser = query.toAccount
-    const htmlContent = query.htmlContent
+    const htmlContent = query.msg
     let flag = 0
     let chatObj = null
     for (let i = 0; i < chattingData.length; i++) {
@@ -89,6 +90,7 @@ module.exports = {
     })
     chatObj.total++
     res.json({
+      method: 'PUT',
       success: true,
     })
   },

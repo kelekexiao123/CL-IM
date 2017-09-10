@@ -61,7 +61,7 @@ class MainPanel extends React.Component {
         toUser: this.props.chatting.toUser.account,
         htmlContent: xss(this.editor.txt.html()),
       }
-      this.props.dispatch({ type: 'chatting/sendMsg', payload: appendData })
+      this.props.dispatch({ type: 'chatting/putChattingMsg', payload: appendData })
     } else {
       notification['error']({
         message: '聊天信息不能为空',
@@ -79,13 +79,13 @@ class MainPanel extends React.Component {
   render() {
     const chatting = this.props.chatting
     return (
-      <Layout style={{ display: 'flex', flexDirection: 'row' }}>
+      <Layout style={{ display: 'flex', flexDirection: 'row'}}>
         <UsersSidebar
-          handleClick={this.tabChange}
+          handleChange={this.tabChange}
           initialTab={chatting.currentTab}
           users={this.props.users}
         />
-        <Layout>
+        <Layout style={{height: '100%'}}>
           <Header
             style={{
               backgroundColor: '#fff', height: 60, display: 'inline-flex',
@@ -96,7 +96,7 @@ class MainPanel extends React.Component {
             <p>{chatting.toUser.name}</p>
           </Header>
           <Content style={{ margin: '12px 16px' }}>
-            <Row style={{ padding: 24, marginBottom: 12, background: '#fff', height: 450, minWidth: 500, overflow: 'auto' }}>
+            <Row style={{ padding: 24, marginBottom: 12, background: '#fff', height: 400, minWidth: 500, overflow: 'auto' }}>
               <ChattingDisplay chattingData={chatting.chattingData} selfUser={this.props.users.self} toUser={chatting.toUser}></ChattingDisplay>
             </Row>
             <Row>

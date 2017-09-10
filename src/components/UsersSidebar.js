@@ -6,7 +6,7 @@ const SubMenu = Menu.SubMenu
 const ButtonGroup = Button.Group
 const { Sider } = Layout
 
-const UsersSidebar = ({ handleClick, initialTab, users }) => {
+const UsersSidebar = ({ handleChange, initialTab, users }) => {
   // const uri = 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg'
   const htmlGroups = users.groups.map(function (groupName, groupIndex) {
     const htmlUserList = users.userList
@@ -48,7 +48,7 @@ const UsersSidebar = ({ handleClick, initialTab, users }) => {
       </ButtonGroup>
       <Menu
         theme="dark"
-        onClick={handleClick}
+        onSelect={handleChange}
         width="240"
         selectedKeys={[initialTab]}
         mode="inline"
@@ -61,7 +61,7 @@ const UsersSidebar = ({ handleClick, initialTab, users }) => {
 }
 
 UsersSidebar.propTypes = {
-  handleClick: PropTypes.func,
+  handleChange: PropTypes.func,
   initialTab: PropTypes.string,
 }
 

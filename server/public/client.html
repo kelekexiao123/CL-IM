@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chat</title>
+  <script src="http://localhost:5000/socket.io/socket.io.js"></script>
+  <link rel="stylesheet" href="css/client.css">
+</head>
+
+<body>
+  <div>
+    <table id="content">
+    </table>
+  </div>
+
+  <table class="tool">
+    <tr>
+      <td class="left">
+        <div id="textContent" contenteditable="true" type="text"></div>
+      </td>
+      <td>
+        <button id="send">发送</button>
+      </td>
+    </tr>
+  </table>
+  <script src="js/client.js"></script>
+</body>
+</html>
