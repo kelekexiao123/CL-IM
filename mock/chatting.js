@@ -4,36 +4,92 @@ const mockjs = require('mockjs')
 let chattingData = {}
 
 if (!global.chattingData) {
-  const data = mockjs.mock([
-    {
-      'account1': '250407778',
-      'account2': '307416054',
-      'data|10': [{
-        'user|1': ['250407778', '307416054'],
-        'htmlContent': /[\u4e00-\u9fa5]{2,100}/
-      }],
-      total: 10,
-    },
-    {
-      'account1': '250407778',
-      'account2': '245723047',
-      'data|7': [{
-        'user|1': ['250407778', '245723047'],
-        'htmlContent': /[\u4e00-\u9fa5]{2,100}/
-      }],
-      total: 7,
-    },
-    {
-      'account1': '111111111',
-      'account2': '250407778',
-      'data|5': [{
-        'user|1': ['111111111', '250407778'],
-        'htmlContent': /[\u4e00-\u9fa5]{2,100}/
-      }],
-      total: 5,
-    },
-  ])
-  chattingData = data
+  const data = mockjs.mock({
+    'data': [
+      {
+        'account1|+1': '250407778',
+        'account2|+1': '307416054',
+        'data|10': [{
+          'user|1': ['250407778', '307416054'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 10,
+      },
+      {
+        'account1': '250407778',
+        'account2': '245723047',
+        'data|7': [{
+          'user|1': ['250407778', '245723047'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 7,
+      },
+      {
+        'account1': '111111111',
+        'account2': '250407778',
+        'data|5': [{
+          'user|1': ['111111111', '250407778'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 5,
+      },
+      {
+        'account1': '222222222',
+        'account2': '250407778',
+        'data|5': [{
+          'user|1': ['222222222', '250407778'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 5,
+      },
+      {
+        'account1': '333333333',
+        'account2': '250407778',
+        'data|5': [{
+          'user|1': ['333333333', '250407778'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 5,
+      },
+      {
+        'account1': '444444444',
+        'account2': '250407778',
+        'data|5': [{
+          'user|1': ['444444444', '250407778'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 5,
+      },
+      {
+        'account1': '555555555',
+        'account2': '250407778',
+        'data|5': [{
+          'user|1': ['555555555', '250407778'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 5,
+      },
+      {
+        'account1': '666666666',
+        'account2': '250407778',
+        'data|5': [{
+          'user|1': ['666666666', '250407778'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 5,
+      },
+      {
+        'account1': '777777777',
+        'account2': '250407778',
+        'data|5': [{
+          'user|1': ['777777777', '250407778'],
+          'htmlContent': /[\u4e00-\u9fa5]{2,100}/
+        }],
+        total: 5,
+      },
+    ]
+  })
+  chattingData = data.data
   global.chattingData = chattingData
 } else {
   chattingData = global.chattingData

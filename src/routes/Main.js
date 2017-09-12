@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'dva'
-import { Layout, Button, Row, Col, Avatar, notification } from 'antd'
+import { Layout, Button, Row, Col, Avatar, message, notification } from 'antd'
 import UsersSidebar from '../components/UsersSidebar'
 import ChattingDisplay from '../components/ChattingDisplay'
 import E from 'wangeditor'
@@ -38,8 +38,36 @@ class MainPanel extends React.Component {
     // }
     editor.create()
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.chatting.alertMsg !== nextProps.chatting.alertMsg) {
+      const { from, description } = nextProps.chatting.alertMsg
+      const btn = (
+        <Button type="primary" size="small" onClick={() => {
+          notification.close()
+        }}>
+          查看新消息
+        </Button>
+      )
+      notification['info']({
+        message: `收到了来自${from}的新消息。`,
+        description,
+        duration: 5,
+        btn,
+      })
+      const friendsArr = this.props.users.userList
+      for (let i = 0; i < friendsArr.length; i++) {
+        if (friendsArr[i].account === from) {
+          this.props.dispatch({
+            type: 'users/addUnreadNum',
+            payload: from
+          })
+          break
+        }
+      }
+    }
+  }
   tabChange = (e) => {
-    console.log(e)
+    console.log('tabchange')
     const userList = this.props.users.userList
     for (let i = 0; i < userList.length; i++) {
       if (e.key === userList[i].account) {
@@ -47,6 +75,10 @@ class MainPanel extends React.Component {
         this.props.dispatch({
           type: 'chatting/fetchChattingMsg',
           payload: { user: userList[i], tab: e.key }
+        })
+        this.props.dispatch({
+          type: 'users/afterRead',
+          payload: userList[i].account
         })
         break
       }
@@ -63,13 +95,7 @@ class MainPanel extends React.Component {
       }
       this.props.dispatch({ type: 'chatting/putChattingMsg', payload: appendData })
     } else {
-      notification['error']({
-        message: '聊天信息不能为空',
-        duration: 2,
-        style: {
-          backgroundColor: 'rgba(64,64,64,0.2)',
-        },
-      })
+      message.warning('聊天信息不能为空')
     }
     this.editor && this.editor.txt.clear()
   }
@@ -79,13 +105,13 @@ class MainPanel extends React.Component {
   render() {
     const chatting = this.props.chatting
     return (
-      <Layout style={{ display: 'flex', flexDirection: 'row'}}>
+      <Layout style={{ display: 'flex', flexDirection: 'row' }}>
         <UsersSidebar
           handleChange={this.tabChange}
           initialTab={chatting.currentTab}
           users={this.props.users}
         />
-        <Layout style={{height: '100%'}}>
+        <Layout style={{ height: '100%' }}>
           <Header
             style={{
               backgroundColor: '#fff', height: 60, display: 'inline-flex',

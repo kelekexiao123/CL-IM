@@ -44,7 +44,11 @@ router.prepareSocketIO = function (server) {
 
     socket.on('disconnect', function () {
       console.log(this.user, '下线')
-      delete users[this.user];
+      delete users[this.user]
+    })
+
+    socket.on('debugMsg', function (msg) {
+      console.log(msg)
     })
   })
 

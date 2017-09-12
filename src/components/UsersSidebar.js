@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Layout, Avatar, Button, Icon } from 'antd'
+import { Menu, Layout, Avatar, Button, Icon, Badge } from 'antd'
 import PropTypes from 'prop-types'
 
 const SubMenu = Menu.SubMenu
@@ -7,7 +7,6 @@ const ButtonGroup = Button.Group
 const { Sider } = Layout
 
 const UsersSidebar = ({ handleChange, initialTab, users }) => {
-  // const uri = 'https://raw.githubusercontent.com/kelekexiao123/blog-storage/master/avatar.jpg'
   const htmlGroups = users.groups.map(function (groupName, groupIndex) {
     const htmlUserList = users.userList
       .filter(function (data, index) {
@@ -15,9 +14,11 @@ const UsersSidebar = ({ handleChange, initialTab, users }) => {
       })
       .map(function (data, index) {
         return (
-          <Menu.Item account={data.account} key={data.account} style={{ display: 'flex', alignItems: 'center' }}>
-            <Avatar shape="square" style={{ marginRight: 10 }} src={data.avatar} />
-            <span>{data.name}({data.account})</span>
+          <Menu.Item account={data.account} key={data.account} style={{ display: 'flex', alignItems: 'center', height: 55 }}>
+            <Badge count={data.unreadNum}>
+              <Avatar shape="square" src={data.avatar} />
+            </Badge>
+            <span style={{ marginLeft: 10 }} >{data.name}({data.account})</span>
           </Menu.Item>
         )
       })

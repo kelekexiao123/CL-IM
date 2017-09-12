@@ -17,6 +17,30 @@ export default {
         userList: friendsData
       }
     },
+    addUnreadNum(state, { payload: fromAccount }) {
+      const newUserList = state.userList.map(function (user) {
+        if (user.account === fromAccount) {
+          user.unreadNum++
+        }
+        return user
+      })
+      return {
+        ...state,
+        userList: newUserList,
+      }
+    },
+    afterRead(state, { payload: fromAccount }) {
+      const newUserList = state.userList.map(function (user) {
+        if (user.account === fromAccount) {
+          user.unreadNum = 0
+        }
+        return user
+      })
+      return {
+        ...state,
+        userList: newUserList,
+      }
+    }
     // add(state, { payload: todo }) {
     //   return state.concat(todo)
     // },

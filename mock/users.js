@@ -6,7 +6,7 @@ let userListData = {}
 
 if (!global.userListData) {
   const data = mockjs.mock({
-    'data|10': [{
+    'data|11': [{
       'groups': ['default', '家人', '朋友'],
       'id': () => {
         return Random.id()
@@ -24,7 +24,7 @@ if (!global.userListData) {
         return Random.datetime('yyyy-MM-dd HH:mm:ss')
       },
     }],
-    total: 10,
+    total: 11,
   })
   userListData = data
   global.userListData = userListData
