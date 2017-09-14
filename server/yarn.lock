@@ -161,6 +161,10 @@ better-assert@~1.0.0:
   dependencies:
     callsite "1.0.0"
 
+bignumber.js@4.0.2:
+  version "4.0.2"
+  resolved "http://registry.npm.taobao.org/bignumber.js/download/bignumber.js-4.0.2.tgz#2d1dc37ee5968867ecea90b6da4d16e68608d21d"
+
 binary-extensions@^1.0.0:
   version "1.10.0"
   resolved "http://registry.npm.taobao.org/binary-extensions/download/binary-extensions-1.10.0.tgz#9aeb9a6c5e88638aad171e167f5900abe24835d0"
@@ -1152,6 +1156,15 @@ ms@2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+mysql@^2.14.1:
+  version "2.14.1"
+  resolved "http://registry.npm.taobao.org/mysql/download/mysql-2.14.1.tgz#e9324015e810a50abda94855cab41edfad56284a"
+  dependencies:
+    bignumber.js "4.0.2"
+    readable-stream "2.3.3"
+    safe-buffer "5.1.1"
+    sqlstring "2.2.0"
+
 nan@^2.3.0:
   version "2.7.0"
   resolved "http://registry.npm.taobao.org/nan/download/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
@@ -1437,7 +1450,7 @@ read-all-stream@^3.0.0:
     pinkie-promise "^2.0.0"
     readable-stream "^2.0.0"
 
-readable-stream@^2.0.0, readable-stream@^2.0.2, readable-stream@^2.0.6, readable-stream@^2.1.4:
+readable-stream@2.3.3, readable-stream@^2.0.0, readable-stream@^2.0.2, readable-stream@^2.0.6, readable-stream@^2.1.4:
   version "2.3.3"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.3.3.tgz#368f2512d79f9d46fdfc71349ae7878bbc1eb95c"
   dependencies:
@@ -1525,7 +1538,7 @@ safe-buffer@5.0.1, safe-buffer@~5.0.1:
   version "5.0.1"
   resolved "http://registry.npm.taobao.org/safe-buffer/download/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
 
-safe-buffer@^5.0.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
+safe-buffer@5.1.1, safe-buffer@^5.0.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "http://registry.npm.taobao.org/safe-buffer/download/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
 
@@ -1661,6 +1674,10 @@ split@0.3:
   resolved "http://registry.npm.taobao.org/split/download/split-0.3.3.tgz#cd0eea5e63a211dfff7eb0f091c4133e2d0dd28f"
   dependencies:
     through "2"
+
+sqlstring@2.2.0:
+  version "2.2.0"
+  resolved "http://registry.npm.taobao.org/sqlstring/download/sqlstring-2.2.0.tgz#c3135c4ea8abcd7e7ee741a4966a891d86a4f191"
 
 sshpk@^1.7.0:
   version "1.13.1"

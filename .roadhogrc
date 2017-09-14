@@ -1,5 +1,5 @@
 {
-  "entry": "src/pages/*.js",
+  "entry": "src/index.js",
   "hash": true,
   "env": {
     "development": {
